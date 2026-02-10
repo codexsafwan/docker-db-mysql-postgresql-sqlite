@@ -1,191 +1,108 @@
-# 🛒 E-Commerce Database with Docker & PostgreSQL
+# � E-Commerce Fullstack Showcase (Next.js + PostgreSQL)
 
-A complete e-commerce database setup using **Docker**, **PostgreSQL 15**, and **Adminer** for database management. This project includes a fully structured database schema with tables for users, products, orders, payments, and reviews.
+This branch demonstrates a complete fullstack integration of a **Next.js App Router** frontend with a **PostgreSQL 15** database, all orchestrated via Docker.
 
----
-
-## 📋 Table of Contents
-
-- [Features](#-features)
-- [Tech Stack](#-tech-stack)
-- [Project Structure](#-project-structure)
-- [Prerequisites](#-prerequisites)
-- [Quick Start](#-quick-start)
-- [Database Schema](#-database-schema)
-- [Usage Guide](#-usage-guide)
-- [Database Operations](#-database-operations)
-- [Troubleshooting](#-troubleshooting)
-- [Environment Variables](#-environment-variables)
+> [!TIP]
+> This is a specialized implementation branch. To see other database versions (MySQL, SQLite) or the comparison matrix, head back to the [**Main Hub**](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite).
 
 ---
 
 ## ✨ Features
 
-- 🐳 **Dockerized PostgreSQL 15** - Fully containerized database
-- 🎨 **Adminer Web UI** - Database management interface
-- 📊 **Complete E-Commerce Schema** - Users, Products, Categories, Orders, Payments, Reviews
-- 🔄 **Auto-initialization** - Database and tables created automatically on first start
-- 🌱 **Seed Data** - Pre-populated sample data for testing
-- 📝 **Migration Support** - Automated SQL update scripts via `run_sql.sh`
-- 🔒 **Secure Configuration** - Environment-based credentials
+- ⚡ **Next.js 14 (App Router)** - Modern React server components.
+- 🐘 **Direct PostgreSQL Integration** - High-performance queries using the `pg` library.
+- 🎨 **Unified Dashboard** - View Products and Categories on a single, premium page.
+- � **One-Command Setup** - Database and Frontend start together via Docker Compose.
+- 📦 **Optimized Builds** - Multi-stage Dockerfile with standalone output support.
+- 🌱 **Auto-Seeded Data** - Pre-populated inventory ready for exploration.
 
 ---
 
 ## 🛠 Tech Stack
 
+- **Frontend**: Next.js 14, Tailwind CSS, JavaScript (`.jsx`)
 - **Database**: PostgreSQL 15
-- **Container**: Docker & Docker Compose
-- **Admin Tool**: Adminer
-- **Language**: SQL (PostgreSQL Syntax)
+- **Driver**: `pg` (Node-Postgres)
+- **Orchestration**: Docker & Docker Compose
+
+---
+
+## 🚀 Quick Start
+
+Ensure you have **Docker** and **Docker Compose** installed.
+
+### 1. Launch the Stack
+
+```bash
+docker-compose up -d --build
+```
+
+This command starts:
+
+- `ecommerce-postgres`: The persistent database.
+- `next-app`: The Next.js dashboard at **http://localhost:3000**.
+- `ecommerce-adminer`: Web GUI for DB management at **http://localhost:8080**.
+
+### 2. Verify Data
+
+Once the containers are up, visit **http://localhost:3000**. You should see a list of Categories and Products fetched directly from the database.
 
 ---
 
 ## 📁 Project Structure
 
 ```
-docker-db-mysql-postgresql-sqlite/
-├── docker-compose.yml          # Docker services configuration
-├── .env                        # Environment variables (credentials)
-├── run_sql.sh                  # Script to run SQL files in PostgreSQL container
-├── Readme.md                   # This file
-├── sql/                        # Initial database setup (auto-runs on first start)
-│   ├── 01_tables.sql          # Table definitions (PostgreSQL schema)
-│   ├── 02_indexes.sql         # Database indexes
-│   └── 03_seed_data.sql       # Sample data
-└── updates/                    # Database migration scripts
-    ├── 05_add_user_phone.sql  # Add phone column to users table
-    └── 06_add_product_updated_at.sql # Add updated_at to products
+.
+├── app/                  # Next.js App Router (Layout, Page, CSS)
+├── lib/                  # Database connection utilities
+├── sql/                  # PostgreSQL schema and seed data
+├── updates/              # Schema migration scripts
+├── docker-compose.yml    # Unified stack configuration
+├── Dockerfile            # Optimized Next.js build
+└── .env                  # Environment variables (Credentials)
 ```
 
 ---
 
-## 📦 Prerequisites
+## 🔄 Database Operations
 
-Before you begin, ensure you have the following installed:
+### Run Migrations
 
-- **Docker** (v20.10+)
-- **Docker Compose** (v2.0+)
-
----
-
-## 🚀 Quick Start
-
-### 1. Start the Database
+Use the helper script to apply updates to the running PostgreSQL container:
 
 ```bash
-docker-compose up -d
-```
-
-This will:
-
-- ✅ Pull PostgreSQL 15 and Adminer images
-- ✅ Create `ecommerce_db` database
-- ✅ Execute all SQL files in `sql/` directory (tables, indexes, seed data)
-- ✅ Start Adminer web interface
-
-### 2. Verify Services are Running
-
-```bash
-docker-compose ps
-```
-
-You should see:
-
-```
-NAME                  STATUS    PORTS
-ecommerce-postgres    Up        0.0.0.0:5432->5432/tcp
-ecommerce-adminer     Up        0.0.0.0:8080->8080/tcp
-```
-
-### 3. Access Adminer (Web UI)
-
-Open your browser and go to: **http://localhost:8080**
-
-**Login credentials:**
-
-- **System**: `PostgreSQL`
-- **Server**: `postgres`
-- **Username**: `ecommerce_user` (from .env)
-- **Password**: `ecommerce_pass` (from .env)
-- **Database**: `ecommerce_db` (from .env)
-
----
-
-## 📖 Usage Guide
-
-### Access PostgreSQL from Command Line
-
-#### Option 1: Using Docker Exec (Recommended)
-
-```bash
-# Interactive psql shell
-docker exec -it ecommerce-postgres psql -U ecommerce_user -d ecommerce_db
-
-# Execute a single query
-docker exec -it ecommerce-postgres psql -U ecommerce_user -d ecommerce_db -c "SELECT * FROM users;"
-```
-
-#### Option 2: Using Local psql Client
-
-```bash
-psql -h localhost -p 5432 -U ecommerce_user -d ecommerce_db
-```
-
----
-
-## 🔄 Running Database Migrations
-
-The project includes a helper script `run_sql.sh` to execute migration files easily.
-
-### Execute Update Scripts
-
-```bash
-# Make script executable (first time only)
 chmod +x run_sql.sh
-
-# Run any SQL file (e.g., adding phone column)
 ./run_sql.sh updates/05_add_user_phone.sql
 ```
 
-**Benefits:**
-
-- ✅ Automatically loads credentials from `.env`
-- ✅ Uses `PGPASSWORD` for non-interactive execution
-- ✅ No need to remember complex `docker exec` syntax
-
----
-
-## 🐛 Troubleshooting
-
-### Port Already in Use
-
-If port 5432 or 8080 is already in use:
+### Access CLI
 
 ```bash
-# Change port in docker-compose.yml
-ports:
-  - "5433:5432"  # Use 5433 instead
-```
-
-### Database Not Initialized
-
-If tables are missing, you may need to clear the volume and restart:
-
-```bash
-docker-compose down -v
-docker-compose up -d
+docker exec -it ecommerce-postgres psql -U ecommerce_user -d ecommerce_db
 ```
 
 ---
 
-## 🔐 Environment Variables
+## 🤔 Why this architecture?
 
-The `.env` file contains database credentials:
+By using **Next.js Server Components** and a direct **SQL Driver (`pg`)**, we eliminate the overhead of traditional REST/GraphQL layers for simple internal tools. This provides:
 
-```env
-POSTGRES_USER=ecommerce_user
-POSTGRES_PASSWORD=ecommerce_pass
-POSTGRES_DB=ecommerce_db
+1. **Lower Latency**: Direct data fetching on the server.
+2. **Simplified Schema**: Your SQL is the source of truth—no complex ORM mappings required.
+3. **Type Safety (Optional)**: While this branch uses JS for simplicity, the pattern easily scales to TypeScript.
+
+---
+
+## � Back to Hub
+
+Want to see the MySQL or SQLite version?
+
+```bash
+git checkout main
 ```
 
-> 🔒 **Security Note**: Never commit `.env` to version control!
+---
+
+## � License
+
+Open-source for educational purposes. 🚀
