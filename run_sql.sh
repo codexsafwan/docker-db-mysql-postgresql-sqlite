@@ -29,13 +29,13 @@ if [ ! -f "$SQL_FILE" ]; then
 fi
 
 echo "📊 Executing SQL file: $SQL_FILE"
-echo "🗄️  Database: $POSTGRES_DB"
-echo "🐳 Container: ecommerce-postgres"
+echo "🗄️  Database: $DB_NAME"
+echo "🐳 Container: ecommerce-sqlite"
 echo ""
 
-# Execute SQL file using psql in the postgres container
-# Note: We use PGPASSWORD to avoid interactive prompt
-docker exec -i -e PGPASSWORD="$POSTGRES_PASSWORD" ecommerce-postgres psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < "$SQL_FILE"
+# Execute SQL file using sqlite3 in the sqlite container
+# We pipe the SQL file into the sqlite3 command
+docker exec -i ecommerce-sqlite sqlite3 "$SQLITE_PATH" < "$SQL_FILE"
 
 if [ $? -eq 0 ]; then
     echo ""

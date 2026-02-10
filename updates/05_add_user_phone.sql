@@ -1,5 +1,7 @@
--- Add phone column to users table (PostgreSQL version)
-ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(20);
+-- Add phone column to users table (SQLite version)
+-- Note: SQLite doesn't natively support IF NOT EXISTS for ADD COLUMN in all versions.
+-- We use a standard ALTER TABLE.
+ALTER TABLE users ADD COLUMN phone TEXT;
 
 -- Optional: add some phone numbers to existing users
 UPDATE users

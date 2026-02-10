@@ -75,9 +75,6 @@ VALUES
 (1, 'Credit Card', 'pending', 'TXN12345', CURRENT_TIMESTAMP),
 (2, 'PayPal', 'success', 'TXN54321', CURRENT_TIMESTAMP);
 
--- Note: Review seeds were present but table was missing in 01_tables.sql.
--- I will add the reviews table to 01_tables.sql and keep these seeds.
-
 -- ==========================================
 -- Reviews
 -- ==========================================

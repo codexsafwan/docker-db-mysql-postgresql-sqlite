@@ -1,29 +1,16 @@
 version: "3.9"
 
 services:
-  postgres:
-    image: postgres:15
-    container_name: ecommerce-postgres
+  sqlite:
+    image: keinos/sqlite3:latest
+    container_name: ecommerce-sqlite
     restart: always
+    tty: true
     environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./sql:/docker-entrypoint-initdb.d
-      - ./updates:/docker-entrypoint-updates.d
-
-  adminer:
-    image: adminer
-    container_name: ecommerce-adminer
-    restart: always
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgres
-
-volumes:
-  postgres_data:
+      - ./sqlite:/db
+      - ./sql:/sql
+      - ./updates:/updates
