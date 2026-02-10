@@ -1,16 +1,18 @@
 version: "3.9"
 
 services:
-  db:
-    image: mysql:8.0
-    container_name: ecommerce-mysql
+  postgres:
+    image: postgres:15
+    container_name: ecommerce-postgres
     restart: always
-    env_file:
-      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - postgres_data:/var/lib/postgresql/data
       - ./sql:/docker-entrypoint-initdb.d
       - ./updates:/docker-entrypoint-updates.d
 
@@ -21,7 +23,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - db
+      - postgres
 
 volumes:
-  mysql_data:
+  postgres_data:

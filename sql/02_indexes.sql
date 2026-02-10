@@ -1,4 +1,4 @@
-USE {{DB_NAME}};
+-- Database indexes
 
 CREATE INDEX idx_users_email ON users(email);
 CREATE INDEX idx_products_price ON products(price);

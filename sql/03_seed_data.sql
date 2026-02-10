@@ -1,5 +1,3 @@
-USE {{DB_NAME}};
-
 -- ==========================================
 -- Users
 -- ==========================================
@@ -38,8 +36,8 @@ VALUES
 -- ==========================================
 INSERT INTO carts (user_id, created_at)
 VALUES
-(2, NOW()),
-(3, NOW());
+(2, CURRENT_TIMESTAMP),
+(3, CURRENT_TIMESTAMP);
 
 -- ==========================================
 -- Cart Items
@@ -56,8 +54,8 @@ VALUES
 -- ==========================================
 INSERT INTO orders (user_id, total, status, created_at)
 VALUES
-(2, 1250.00, 'pending', NOW()), -- John
-(3, 845.00, 'paid', NOW());     -- Jane
+(2, 1250.00, 'pending', CURRENT_TIMESTAMP), -- John
+(3, 845.00, 'paid', CURRENT_TIMESTAMP);     -- Jane
 
 -- ==========================================
 -- Order Items
@@ -74,8 +72,11 @@ VALUES
 -- ==========================================
 INSERT INTO payments (order_id, method, status, transaction_id, created_at)
 VALUES
-(1, 'Credit Card', 'pending', 'TXN12345', NOW()),
-(2, 'PayPal', 'success', 'TXN54321', NOW());
+(1, 'Credit Card', 'pending', 'TXN12345', CURRENT_TIMESTAMP),
+(2, 'PayPal', 'success', 'TXN54321', CURRENT_TIMESTAMP);
+
+-- Note: Review seeds were present but table was missing in 01_tables.sql.
+-- I will add the reviews table to 01_tables.sql and keep these seeds.
 
 -- ==========================================
 -- Reviews

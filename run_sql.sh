@@ -29,13 +29,13 @@ if [ ! -f "$SQL_FILE" ]; then
 fi
 
 echo "📊 Executing SQL file: $SQL_FILE"
-echo "🗄️  Database: $MYSQL_DATABASE"
-echo "🐳 Container: ecommerce-mysql"
+echo "🗄️  Database: $POSTGRES_DB"
+echo "🐳 Container: ecommerce-postgres"
 echo ""
 
-# Replace {{DB_NAME}} placeholder with actual database name and execute
-sed "s/{{DB_NAME}}/$MYSQL_DATABASE/g" "$SQL_FILE" | \
-    docker exec -i ecommerce-mysql mysql -uroot -p"$MYSQL_ROOT_PASSWORD" "$MYSQL_DATABASE"
+# Execute SQL file using psql in the postgres container
+# Note: We use PGPASSWORD to avoid interactive prompt
+docker exec -i -e PGPASSWORD="$POSTGRES_PASSWORD" ecommerce-postgres psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" < "$SQL_FILE"
 
 if [ $? -eq 0 ]; then
     echo ""
