@@ -11,11 +11,12 @@ Welcome to the **Multi-DB E-Commerce Showcase**. This repository demonstrates ho
 
 Each database engine has its own dedicated branch with optimized configurations and scripts.
 
-| Branch                                                                                                 | Database Engine | Quick Link                                                                                         |
-| :----------------------------------------------------------------------------------------------------- | :-------------- | :------------------------------------------------------------------------------------------------- |
-| [`docker-mysql`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-mysql)   | **MySQL 8.0**   | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-mysql)  |
-| [`docker-psql`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-psql)     | **PostgreSQL**  | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-psql)   |
-| [`docker-sqlite`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-sqlite) | **SQLite 3**    | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-sqlite) |
+| Branch                                                                                                           | Database Engine          | Quick Link                                                                                              |
+| :--------------------------------------------------------------------------------------------------------------- | :----------------------- | :------------------------------------------------------------------------------------------------------ |
+| [`docker-mysql`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-mysql)             | **MySQL 8.0**            | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-mysql)       |
+| [`docker-psql`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-psql)               | **PostgreSQL**           | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-psql)        |
+| [`docker-sqlite`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-sqlite)           | **SQLite 3**             | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-sqlite)      |
+| [`docker-psql-nextjs`](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-psql-nextjs) | **PostgreSQL + Next.js** | [View Branch](https://github.com/codexsafwan/docker-db-mysql-postgresql-sqlite/tree/docker-psql-nextjs) |
 
 ### 🔄 How to Switch
 
@@ -30,6 +31,9 @@ git checkout docker-psql
 
 # To use SQLite
 git checkout docker-sqlite
+
+# To use PostgreSQL + Next.js Showcase
+git checkout docker-psql-nextjs
 ```
 
 ---
